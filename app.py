@@ -12,7 +12,7 @@ def get_bundle():
 
 bundle = get_bundle()
 
-st.title("🫀 Heart Disease Risk Screening")
+st.title("Heart Disease Risk Screening")
 
 # ---------------------------------------------------------------- sidebar
 with st.sidebar:
