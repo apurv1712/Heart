@@ -7,7 +7,17 @@ import streamlit as st
 
 from heart_core import ensure_bundle, predict_proba, contributions, adjust_for_prevalence
 
-ASSETS = Path(__file__).resolve().parent / "assets"
+HERE = Path(__file__).resolve().parent
+ASSETS = HERE / "assets"
+
+
+def asset(name):
+    """Find a figure or table in assets/, or next to app.py if it was uploaded there by mistake."""
+    for folder in (ASSETS, HERE):
+        p = folder / name
+        if p.exists():
+            return p
+    return None
 
 st.set_page_config(page_title="Heart Disease Risk Screening", layout="wide")
 
@@ -268,8 +278,8 @@ with tab_pred:
 # --------------------------------------------------------------- evaluation
 with tab_eval:
     st.subheader("Model comparison")
-    cmp_path = ASSETS / "model_comparison.csv"
-    if cmp_path.exists():
+    cmp_path = asset("model_comparison.csv")
+    if cmp_path:
         cmp = pd.read_csv(cmp_path).rename(columns={
             "model": "Model", "accuracy": "Accuracy", "precision": "Precision", "recall": "Recall",
             "f1": "F1", "roc_auc": "ROC-AUC", "auc_std": "AUC std"})
@@ -286,14 +296,17 @@ with tab_eval:
         ("09_calibration.png", "Calibration"),
         ("14_fairness_subgroups.png", "Subgroup performance"),
     ]
-    available = [(f, t) for f, t in figures if (ASSETS / f).exists()]
+    available = [(f, t) for f, t in figures if asset(f)]
+    if not available:
+        st.info("Evaluation figures were not found. Add the files from the assets folder "
+                "(the .png files and model_comparison.csv) to the repository.")
     if available:
         st.subheader("Figures")
         cols = st.columns(2, gap="large")
         for i, (f, t) in enumerate(available):
             with cols[i % 2]:
                 st.markdown(f'<div class="sec">{escape(t)}</div>', unsafe_allow_html=True)
-                st.image(str(ASSETS / f))
+                st.image(str(asset(f)))
 
     with st.expander("How reliable are these probabilities at other hospitals?"):
         st.markdown("""
