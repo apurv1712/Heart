@@ -54,7 +54,8 @@ Donor: David W. Aha. Detrano et al., *Am J Cardiol* 1989;64:304-310.
 
 ## Layout
 ```
-app.py              Streamlit UI
+app.py              Streamlit UI (tabs: risk estimate, model evaluation, about)
+assets/             evaluation figures and model_comparison.csv shown in the app
 heart_core.py       prediction, explanation, prevalence adjustment, model loading/fallback retrain
 train_model.py      trains and saves the models
 data/               processed_cleveland.data
