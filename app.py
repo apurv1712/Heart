@@ -72,10 +72,7 @@ bundle = get_bundle()
 st.markdown(
     '<div class="topbar"><div class="t">Heart Disease Risk Screening</div>'
     '<div class="s">Logistic regression models trained on the UCI Heart Disease database '
-    '(Cleveland Clinic, 303 patients)</div></div>', unsafe_allow_html=True)
-st.markdown(
-    '<div class="notice"><b>Educational project, not a medical device.</b> '
-    'Do not use it for real diagnosis or treatment decisions.</div>', unsafe_allow_html=True)
+    '(Cleveland Clinic)</div></div>', unsafe_allow_html=True)
 
 # ---------------------------------------------------------------- sidebar
 with st.sidebar:
